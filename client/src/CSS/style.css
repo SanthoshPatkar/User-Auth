@@ -1,0 +1,17 @@
+.signup {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form_style {
+   border: 0.5px solid black;
+   padding: 2%;
+   border-radius: 10px;
+   width: 22%;
+}
+.option_name {
+    text-decoration: none;
+    color: black;
+}
