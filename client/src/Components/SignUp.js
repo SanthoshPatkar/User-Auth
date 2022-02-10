@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "../CSS/style.css";
-import axios from 'axios'
+import axios from 'axios';
 
 const SignUp = () => {
   const [user,setUser]=useState({
@@ -13,11 +13,21 @@ const SignUp = () => {
     cpassword:""
   })
 
-  const handleSubmit= async (e) =>{
+  const handleSubmit = async (e) =>{
+   
      e.preventDefault();
-     await axios.post(`http://localhost:3001/register`,user).then((res)=>{
-       console.log(res);
-     })
+     
+     const {name,email,phone,password,cpassword}=user;
+     const res=await fetch("/register",{
+       method:"POST",
+       headers:{
+         "Content-Type":"application/json"
+       },
+       body: JSON.stringify({
+         name,email,phone,password,cpassword
+       })
+     });
+     console.log(res);
   }
   return (
     <div className="sign">
