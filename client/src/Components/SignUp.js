@@ -1,10 +1,10 @@
 import React,{useState} from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "../CSS/style.css";
-import axios from 'axios';
 
 const SignUp = () => {
+  const history=useHistory();
   const [user,setUser]=useState({
     name:"",
     email:"",
@@ -27,7 +27,17 @@ const SignUp = () => {
          name,email,phone,password,cpassword
        })
      });
-     console.log(res);
+      const data= await res.json();
+      if(data.status===422 || !data)
+      {
+        window.alert("Inavalid Registration")
+        console.log("Invalid regstration")
+      }
+      else{
+        window.alert("Successful Registration")
+        console.log("Successful regstration")
+        history.push('/login')
+      }
   }
   return (
     <div className="sign">
