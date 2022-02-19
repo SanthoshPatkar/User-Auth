@@ -1,7 +1,38 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React,{useState} from "react";
+import { NavLink,useHistory } from "react-router-dom";
+import axios from 'axios';
 
 const Login = () => {
+  const history=useHistory();
+  const [email,setEmail]=useState()
+  const [password,setpassword]=useState()
+  const handleLogin=async (e) =>{
+    e.preventDefault();
+    
+    const res=await fetch("/signin",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        email,password
+      })
+    })
+   
+ 
+   if(res.status===422 || !res)
+   {
+    window.alert("Inavalid Credentials")
+    console.log("Invalid credentials")
+   }
+   else
+   {
+    window.alert("Successful Login")
+    console.log("Successful login")
+    history.push('/')
+   }
+
+  }
   return (
     <div className="sign log">
       <div>
@@ -22,6 +53,8 @@ const Login = () => {
                 name="email"
                 autoComplete="off"
                 placeholder="Email"
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -33,6 +66,8 @@ const Login = () => {
                 name="password"
                 autoComplete="off"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
               />
             </div>
           </form>
@@ -41,7 +76,7 @@ const Login = () => {
               Create Your Account
             </NavLink>
           </div>
-          <button type="submit" name="login" value="signin" className="btn mt-2 px-5 btn-primary">
+          <button type="submit" name="login" value="signin" onClick={handleLogin} className="btn mt-2 px-5 btn-primary">
             Login
           </button>
         </div>

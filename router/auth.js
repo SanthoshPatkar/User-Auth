@@ -42,11 +42,11 @@ router.post("/register", async (req, res) => {
   try {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
-      return res.status(422).json({ error: "email already exist" });
+      return res.status(422).json({error: "email already exist" });
     }
     else if (password != cpassword)
     {
-        return res.status(422).json({ error: "password not matching" });
+        return res.status(422).json({error: "password not matching" });
     }
     else{
         const user = new User({ name, email, phone, password, cpassword });
@@ -70,7 +70,7 @@ router.post("/signin",async (req,res)=>{
         const {email,password}=req.body;
         if(!email || !password)
         {
-            return res.status(400).json({ error: "error macha pls fill properly" });
+            return res.status(422).json({ error: "error macha pls fill properly" });
         }
 
         const userLogin=await User.findOne({email:email});
@@ -89,17 +89,22 @@ router.post("/signin",async (req,res)=>{
 
           if(!isMatch)
           {
-              res.status(400).json({error:"Invalid Credential"});
+              res.status(422).json({error:"Invalid Credential"});
           }else{
               res.json({message:"user signin sucessfull"});
           }
         }
         else{
-          res.status(400).json({error:"Invalid Credential"});
+          res.status(422).json({error:"Invalid Credential"});
         }
        
     }catch(err){
             console.log(err)
     }
 })
+
+// router.get('/about',authenticate,(req,res)=>{
+
+// })
+
 module.exports = router;

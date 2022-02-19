@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "../CSS/style.css";
+// import axios from 'axios';
 
 const SignUp = () => {
   const history=useHistory();
@@ -16,7 +17,6 @@ const SignUp = () => {
   const handleSubmit = async (e) =>{
    
      e.preventDefault();
-     
      const {name,email,phone,password,cpassword}=user;
      const res=await fetch("/register",{
        method:"POST",
@@ -27,17 +27,17 @@ const SignUp = () => {
          name,email,phone,password,cpassword
        })
      });
-      const data= await res.json();
-      if(data.status===422 || !data)
-      {
+      if(res.status===422 || !res)
+       {
         window.alert("Inavalid Registration")
         console.log("Invalid regstration")
-      }
+       }
       else{
         window.alert("Successful Registration")
         console.log("Successful regstration")
         history.push('/login')
-      }
+       }
+     
   }
   return (
     <div className="sign">
